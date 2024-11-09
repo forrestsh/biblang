@@ -5,6 +5,21 @@
 
 (defonce state (r/atom {}))
 
+(defn remove-quotes [x]
+  (cond
+    (sequential? x)
+    (if (and (seq x) (= (first x) 'quote))
+      (remove-quotes (second x))          ; Skip 'quote' and process the next element
+      (map remove-quotes x))              ; Recursively process the list
+    :else x))                             ; Return the element if it's not a list
+
+(def responsive-styles
+  {:content-container {:display "flex"
+                       :flex-wrap "wrap"}
+   :division {:padding "10px"}
+   :left-division {:background-color "#f0f0f0"}
+   :right-division {:background-color "#e0e0e0"}})
+
 (defn button-clicked [_ev]
   (swap! state update-in [:number] inc))
 
@@ -82,14 +97,12 @@
     (.play audio)))
 
 (defn left-division []
-;;  (let [audio-src "E:\\usr\\forrestshen\\repos\\biblang\\resources\\ttsMP3.com_VoiceText_2024-11-6_13-30-27.mp3"] ; Replace with your actual audio file path
-;;  (let [audio-src "file:///e:/usr/forrestshen/repos/biblang/resources/ttsMP3.com_VoiceText_2024-11-6_13-30-27.mp3"] ; Replace with your actual audio file path
+;;  (let [audio-src "file:///e:/usr/forrest/audio.mp3"]
   (let [audio-src "ttsMP3.com_VoiceText_2024-11-6_13-30-27.mp3"] ; Replace with your actual audio file path
-
-    [:div {:style {:width "45%"
-                   :float "left"
-                   :padding "10px"
-                   :background-color "#f0f0f0"}}
+    (bib/English)
+    [:div {:class "division left-division"
+           :style (merge (:division responsive-styles)
+                         (:left-division responsive-styles))}
      [:div {:style {:display "flex"
                     :align-items "center"}}
       [:button {:on-click #(play-audio audio-src)
@@ -103,56 +116,46 @@
               :height "24"}
         [:path {:fill "currentColor"
                 :d "M8 5v14l11-7z"}]]]
+     ;; [:p "This is the left division containing a sentence."]]]))
       [:p (bib/sci-eval bib/s1)]]])) ;; ((bib/BOOK-BIBLE) 0)]])
-;;     [:p "This is the left division containing a sentence."]]]))
 
-(defn left-division1 []
-  (do
-    ;; (println (bib/eval-str "(+ 1 2)"))
-    (bib/English)
-    [:div {:style {:width "47%"
-                 :float "left"
-                 :padding "10px"
-                 :background-color "#f0f0f0"}}
-   [:p (bib/sci-eval bib/s1)]]) ;; ((bib/BOOK-BIBLE) 0)]])
-
-    )
-   ;"This is the left division containing a sentence. afdafkdsafjdsafdjdsakfjdsakfjsdfjasdfjsdkfjsdkfjkdsfja"]])
 
 (defn right-division []
-  (do
-    ;; (intern 'hnc-gen.bible 'language :Chinese)
-    (bib/Chinese)
-  [:div {:style {:width "47%"
-                 :float "right"
-                 :padding "10px"
-                 :background-color "#e0e0e0"}}
-      [:p (bib/sci-eval bib/s1)]]))
-
-;;   [:p "This is the right division with another sentence."]]))
-
-(defn bottom-division-1 []
-  [:div {:style {:clear "both"
-                 :padding "10px"
-                 :background-color "#d0d0d0"}}
-
-    [:p "This is the bottom division, containing the third sentence."]])
+  (bib/Chinese)
+  [:div {:class "division right-division"
+         :style (merge (:division responsive-styles)
+                       (:right-division responsive-styles))}
+  ;; [:p "This is the right division with another sentence."]])
+      [:p (bib/sci-eval bib/s1)]])
 
 (defn bottom-division []
   [:div {:style {:clear "both"
                  :padding "10px"
                  :background-color "#d0d0d0"}}
    [:h2 "Tree Structure"]
-   [render-tree tree-data]])
-
+   [render-tree (remove-quotes tree-data)]])
 
 (defn main-page []
   [:div
    [top-division]
-   [:div {:style {:overflow "hidden"}} ; This ensures that the float layout works correctly
-   [left-division]
-   [right-division]]
+   [:div {:class "content-container"
+          :style (:content-container responsive-styles)}
+    [left-division]
+    [right-division]]
    [bottom-division]])
+
+(defn apply-media-queries []
+  (let [style-el (js/document.createElement "style")]
+    (set! (.-innerHTML style-el)
+          (str "
+               .content-container { display: flex; flex-direction: column; }
+               .division { width: 100%; }
+               @media (min-width: 768px) {
+                 .content-container { flex-direction: row; }
+                 .division { width: 47.5%; }
+               }
+               "))
+    (.appendChild js/document.head style-el)))
 
 (defn component-main [state]
   [:div
@@ -163,13 +166,12 @@
    [:p [:a {:href "/mypage"} "Static server rendered page."]]
    [:p [:a {:href "/api/example.json"} "JSON API example."]]])
 
-(defn start1 {:dev/after-load true} []
-  (rdom/render [component-main state]
-               (js/document.getElementById "app")))
-
-(defn start {:dev/after-load true} []
+(defn start
+  {:dev/after-load true}
+  []
   (rdom/render [main-page]
-               (js/document.getElementById "app")))
+               (js/document.getElementById "app"))
+  (apply-media-queries))
 
 (defn main! []
   (start))
