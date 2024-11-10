@@ -2,10 +2,14 @@
   (:require [cljs.js :as cljs]
             [sci.core :as sci]))
 
-(declare sci-context)
+(declare sci-context make-phase)
 
 ;;(def sci-context
 ;;  {:namespaces {'user {'GOD hnc-gen.bible/GOD}}})
+(defn process-list [input]
+  (if (and (list? input) (= 'quote (first input)))
+    (second input)
+    input))
 
 (defn evaluate [code]
   (try
@@ -15,7 +19,10 @@
       (println "Error:" (.-message e)))))
 
 (defn sci-eval [list]
-  (evaluate (str list)))
+  (evaluate (str (process-list list))))
+
+(defn generate [list]
+  (make-phase (sci-eval list)))
 
 (def language (atom :English))
 
@@ -38,13 +45,16 @@
     )
 )
 
+(defn make-phase [words]
+  (clojure.string/join " " words))
+
 (defn CREATE
     ([]
         (case @language
             :English
-            (vector "create")
+            (make-phase (vector "create"))
             :Chinese
-            (vector "创造")
+            (make-phase (vector "创造"))
         )
     )
     ([creator object & {:keys [tense time]
@@ -52,7 +62,7 @@
 
          (case @language
              :English
-             (make-sentence
+               (make-sentence
                  (flatten
                     (vector
                         (if (nil? time) [] (vector (sci-eval time)))
@@ -64,16 +74,16 @@
                           )
                     )
                  )
-             )
+               )
              :Chinese
-             (make-sentence
+               (make-sentence
                  (flatten
                     (vector
                         (if (nil? time) [] (vector (sci-eval time)))
                           (flatten (vector (sci-eval creator) (CREATE) (sci-eval object)))
                     )
                   )
-             )
+                )
         )
     )
 )
@@ -82,9 +92,9 @@
     ([]
         (case @language
             :English
-            (vector "God")
+            (make-phase (vector "God"))
             :Chinese
-            (vector "神")
+            (make-phase (vector "神"))
         )
     )
 )
@@ -93,9 +103,9 @@
     ([]
         (case @language
             :English
-            (vector "in the beginning")
+            (make-phase (vector "in the beginning"))
             :Chinese
-            (vector "起初")
+            (make-phase (vector "起初"))
         )
     )
 )
@@ -109,20 +119,20 @@
                 "Singular"
                 (case spec
                     "Definite"
-                    (vector "the heaven")
+                    (make-phase (vector "the heaven"))
                     "Indefinite"
-                    (vector "a heaven")
+                    (make-phase (vector "a heaven"))
                 )
                 "Plural"
                 (case spec
                     "Definite"
-                    (vector "the heavens")
+                    (make-phase (vector "the heavens"))
                     "Indefinite"
-                    (vector "heavens")
+                    (make-phase (vector "heavens"))
                 )
             )
             :Chinese
-            (vector "天")
+            (make-phase (vector "天"))
         )
     )
 )
@@ -136,20 +146,20 @@
             "Singular"
             (case spec
                 "Definite"
-                (vector "the earth")
+                (make-phase (vector "the earth"))
                 "Indefinite"
-                (vector "an earth")
+                (make-phase (vector "an earth"))
             )
             "Plural"
             (case spec
                 "Definite"
-                (vector "the earths")
+                (make-phase (vector "the earths"))
                 "Indefinite"
-                (vector "earths")
+                (make-phase (vector "earths"))
             )
         )
         :Chinese
-        (vector "地")
+        (make-phase (vector "地"))
     )
 )
 
@@ -157,9 +167,9 @@
     ([x,y]
         (case @language
             :English
-            (flatten (vector (sci-eval x) "and" (sci-eval y)))
+            (make-phase (flatten (vector (sci-eval x) "and" (sci-eval y))))
             :Chinese
-            (flatten (vector (sci-eval x) "和" (sci-eval y)))
+            (make-phase (flatten (vector (sci-eval x) "和" (sci-eval y))))
         )
     )
 )

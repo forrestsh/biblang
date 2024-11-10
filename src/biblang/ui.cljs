@@ -1,9 +1,34 @@
 (ns biblang.ui
   (:require [reagent.core :as r]
             [reagent.dom :as rdom]
-            [hnc-gen.bible :as bib]))
+            [hnc-gen.bible :as bib]
+            [clojure.string :as str]))
 
 (defonce state (r/atom {}))
+
+(defn highlight-phrase [sentence phrase]
+  (if (str/blank? phrase)
+    [:span sentence]
+    (let [escaped-phrase (str/replace phrase #"[.*+?^${}()|[\\]\\\\]" "\\$&")
+          pattern (re-pattern (str "(?i)(" escaped-phrase ")"))
+          parts (str/split sentence pattern)]
+      (into [:span]
+            (mapcat (fn [part i]
+                      (if (even? i)
+                        [[:span part]]
+                        [[:span {:style {:color "red"}} part]]))
+                    parts
+                    (range))))))
+
+(defn highlight-phrase1 [sentence phrase]
+  (if (str/blank? phrase)
+    [:span sentence]
+    (let [pattern (re-pattern (str "(?i)(" (str/replace phrase #"[.*+?^${}()|[\\]\\\\]" "\\$&") ")"))
+          parts (str/split sentence pattern)]
+      (println parts)
+      (into [:span]
+            (interpose [:span {:style {:color "red"}} phrase]
+                       (map (fn [part] [:span part]) parts))))))
 
 (defn remove-quotes [x]
   (cond
@@ -46,6 +71,22 @@
        (for [child (rest node)]
          ^{:key (gensym)} [render-tree child])]
       (name node))]])
+
+;; Define an atom to hold the selected node
+(def selected-node (r/atom nil))
+
+(defn tree-component [lst]
+  [:ul
+   (for [item lst]
+     (when item  ; Ensure item is not nil
+       ^{:key (hash item)}
+       [:li
+        {:on-click (fn [e]
+                     (.stopPropagation e)      ; Prevent event bubbling
+                     (reset! selected-node lst))}
+        (if (sequential? item)
+          [tree-component item]  ; Recursive rendering for nested lists
+          (str item))]))])
 
 (defn button-style [side]
   {:position "absolute"
@@ -117,8 +158,10 @@
         [:path {:fill "currentColor"
                 :d "M8 5v14l11-7z"}]]]
      ;; [:p "This is the left division containing a sentence."]]]))
-      [:p (bib/sci-eval bib/s1)]]])) ;; ((bib/BOOK-BIBLE) 0)]])
-
+      [:p [highlight-phrase (bib/sci-eval bib/s1) (bib/sci-eval @selected-node)]]
+      ;;[:p (bib/sci-eval bib/s1)]
+      ;;[:p (bib/sci-eval @selected-node)]
+      ]])) ;; ((bib/BOOK-BIBLE) 0)]])
 
 (defn right-division []
   (bib/Chinese)
@@ -126,14 +169,18 @@
          :style (merge (:division responsive-styles)
                        (:right-division responsive-styles))}
   ;; [:p "This is the right division with another sentence."]])
-      [:p (bib/sci-eval bib/s1)]])
+   ;;   [:p (bib/sci-eval bib/s1)]
+   [:p [highlight-phrase (bib/sci-eval bib/s1) (bib/sci-eval @selected-node)]]
+   ])
 
 (defn bottom-division []
   [:div {:style {:clear "both"
                  :padding "10px"
                  :background-color "#d0d0d0"}}
    [:h2 "Tree Structure"]
-   [render-tree (remove-quotes tree-data)]])
+   ;;[render-tree (remove-quotes tree-data)]])
+  [tree-component tree-data]])
+
 
 (defn main-page []
   [:div
