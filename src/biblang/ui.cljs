@@ -25,7 +25,7 @@
     [:span sentence]
     (let [pattern (re-pattern (str "(?i)(" (str/replace phrase #"[.*+?^${}()|[\\]\\\\]" "\\$&") ")"))
           parts (str/split sentence pattern)]
-      (println parts)
+      ;;(println parts)
       (into [:span]
             (interpose [:span {:style {:color "red"}} phrase]
                        (map (fn [part] [:span part]) parts))))))
