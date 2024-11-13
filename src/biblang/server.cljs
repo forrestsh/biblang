@@ -85,9 +85,9 @@
   (web/reset-routes app)
 
   ;; Add CORS middleware
-  (j/call app :use (cors #js {:origin "http://localhost:8000"  ; Replace with your frontend URL
-                              :credentials true}))
-  (j/call app :use (cors #js {:origin "*"}))
+  ;; (j/call app :use (cors #js {:origin "http://localhost:8000"  ; Replace with your frontend URL
+  ;;                            :credentials true}))
+  ;; (j/call app :use (cors #js {:origin "*"}))
 
   ;; Add CORS middleware
   ;; (let [cors-options #js {:origin "http://localhost:8000"  ; Replace with your frontend URL
@@ -99,8 +99,8 @@
   ;; (deps/csrf app #js {:ignoreMethods #js ["POST" "PUT" "DELETE"]})
 
   ;; Add a route to get the CSRF token
-  (j/call app :get "/csrf-token" (fn [req res]
-    (.json res #js {:csrfToken (j/get req :csrfToken)})))
+  ;; (j/call app :get "/csrf-token" (fn [req res]
+  ;;  (.json res #js {:csrfToken (j/get req :csrfToken)})))
 
   (j/call app :get "/mypage" #(.send %2 (render-into template "body" [my-page])))
   (j/call app :get "/api/example.json" api-example)
@@ -109,7 +109,7 @@
   ;; New API routes
   (j/call app :get "/api/items" get-all-items)
   (j/call app :get "/api/items/:id" get-item-by-id)
-  (j/call app :post "/api/items" create-item)
+  (j/call (j/get app "pre-csrf-router") :post  "/api/items" create-item)
   (j/call app :put "/api/items/:id" update-item)
   (j/call app :delete "/api/items/:id" delete-item)
 
