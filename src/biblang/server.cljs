@@ -46,11 +46,26 @@
   (.json res (clj->js @data-store)))
 
 (defn get-item-by-id [req res]
-  (let [id (j/get-in req [:params :id])
-        item (first (filter #(= (:id %) id) @data-store))]
-    (if item
-      (.json res (clj->js item))
-      (.status res 404))))
+  (try
+    (let [id (js/parseInt (j/get-in req [:params :id]))]
+      (println "Received ID:" id)
+      (println "Data store contents:" @data-store)
+      (let [item (first (filter #(= (:number %) id) @data-store))]
+        (println "Found item:" item)
+        (if item
+          (do
+            (println "Sending response with item")
+            (.json res (clj->js item)))
+          (do
+            (println "No item found, sending 404")
+            (-> res
+                (j/call :status 404)
+                (j/call :json (clj->js {:error "Item not found"})))))))
+    (catch js/Error e
+      (println "Error occurred:" (.-message e))
+      (-> res
+          (j/call :status 500)
+          (j/call :json (clj->js {:error "Internal server error"}))))))
 
 (defn create-item [req res]
   (let [body (js->clj (j/get req :body) :keywordize-keys true)

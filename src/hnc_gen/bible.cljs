@@ -169,7 +169,9 @@
             :English
             (make-phase (flatten (vector (sci-eval x) "and" (sci-eval y))))
             :Chinese
-            (make-phase (flatten (vector (sci-eval x) "和" (sci-eval y))))
+            (if (= (first x) 'HEAVEN)
+              (make-phase (flatten (vector (sci-eval x) (sci-eval y))))
+              (make-phase (flatten (vector (sci-eval x) "和" (sci-eval y)))))
         )
     )
 )
@@ -189,9 +191,48 @@
 (defn English []
   (reset! language :English))
 
+(def s1 '(CREATE '(GOD) '(AND '(HEAVEN :number "Plural" :spec "Definite") '(EARTH)) :tense "Past" :time '(BEGIN)))
+
+(defn REVERE []
+  (case @language
+    :English
+    "But in your hearts revere Christ as Lord."
+    :Chinese
+    "只要心裡尊主基督為聖。"))
+
+(defn PREPARE []
+  (case @language
+    :English
+    "Always be prepared to give an answer to everyone who asks you to give the reason for the hope that you have."
+    :Chinese
+    "有人問你們心中盼望的緣由，就要常作準備，"))
+
+(defn DO []
+  (case @language
+    :English
+    "But do this with gentleness and respect."
+    :Chinese
+    "以溫柔、敬畏的心回答各人。"))
+
+(defn CON [x y z]
+  (case @language
+    :English
+    (make-phase (map sci-eval [x y z]))
+    :Chinese
+    (make-phase (map sci-eval [x y z]))))
+
 (def sci-context
   {:namespaces {'user (into {} (map (fn [[k v]] [k @v]) (ns-publics 'hnc-gen.bible)))}})
 
-(def s1 '(CREATE '(GOD) '(AND '(HEAVEN :number "Plural" :spec "Definite") '(EARTH)) :tense "Past" :time '(BEGIN)))
+(def daily-bread [{:title "Genesis 1:1"
+                   :verse '(CREATE '(GOD) '(AND '(HEAVEN :number "Plural" :spec "Definite") '(EARTH)) :tense "Past" :time '(BEGIN))
+                   :image "/img/genesis-1-1.jpg"
+                   :audio-en "/audio/en/genesis-1-1.mp3"
+                   :audio-cn "/audio/cn/genesis-1-1.mp3"}
+                  {:title "1 Peter 3:15"
+                   :verse '(CON '(REVERE) '(PREPARE) '(DO))
+                   :image "/img/1-peter-3-15.jpg"
+                   :audio-en "/audio/en/1-peter-3-15.mp3"
+                   :audio-cn "/audio/cn/1-peter-3-15.mp3"}])
 ;; (CREATE '(GOD) '(AND '(HEAVEN {:number "Plural" :spec "Definite"}) '(EARTH)) {:tense "Past" :time '(BEGIN)})
 
