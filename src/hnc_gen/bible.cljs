@@ -227,12 +227,12 @@
 (def daily-bread [{:title "Genesis 1:1"
                    :verse '(CREATE '(GOD) '(AND '(HEAVEN :number "Plural" :spec "Definite") '(EARTH)) :tense "Past" :time '(BEGIN))
                    :image "/img/genesis-1-1.jpg"
-                   :audio-en "/audio/en/genesis-1-1.mp3"
-                   :audio-cn "/audio/cn/genesis-1-1.mp3"}
+                   :audio-en "/audio/en/genesis-1-1.m4a"
+                   :audio-cn "/audio/cn/genesis-1-1.m4a"}
                   {:title "1 Peter 3:15"
                    :verse '(CON '(REVERE) '(PREPARE) '(DO))
                    :image "/img/1-peter-3-15.jpg"
-                   :audio-en "/audio/en/1-peter-3-15.mp3"
-                   :audio-cn "/audio/cn/1-peter-3-15.mp3"}])
+                   :audio-en "/audio/en/1-peter-3-15.m4a"
+                   :audio-cn "/audio/cn/1-peter-3-15.m4a"}])
 ;; (CREATE '(GOD) '(AND '(HEAVEN {:number "Plural" :spec "Definite"}) '(EARTH)) {:tense "Past" :time '(BEGIN)})
 
