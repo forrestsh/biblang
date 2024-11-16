@@ -193,6 +193,90 @@
 
 (def s1 '(CREATE '(GOD) '(AND '(HEAVEN :number "Plural" :spec "Definite") '(EARTH)) :tense "Past" :time '(BEGIN)))
 
+(defn LORD []
+  (case @language
+    :English
+    "Lord"
+    :Chinese
+    "聖"))
+
+(defn CHRIST []
+  (case @language
+    :English
+    "Christ"
+    :Chinese
+    "主基督"))
+
+(defn IN-YOUR-HEART []
+  (case @language
+    :English
+    "in your hearts"
+    :Chinese
+    "心裡"))
+
+(defn BUT []
+  (case @language
+    :English
+    "but"
+    :Chinese
+    "只要"))
+
+(defn REVERE1 [subject object & {:keys [target location connect]
+                  :or {target nil location nil connect nil}}]
+  (case @language
+    :English
+    (make-sentence (vector (sci-eval connect)
+                           (sci-eval location) (sci-eval subject)
+                           "revere" (sci-eval object) "as" (sci-eval target)))
+    ;; "But in your hearts revere Christ as Lord."
+    :Chinese
+    (make-sentence (vector (sci-eval connect) (sci-eval location)
+                           (sci-eval subject) "尊" (sci-eval object) "為" (sci-eval target)))))
+    ;; "只要心裡尊主基督為聖。"))
+
+(defn ALWAYS []
+  (case @language
+    :English
+    "always"
+    :Chinese
+    "常"))
+
+(defn GIVE-ANSWER []
+  (case @language
+    :English
+    "give an answer to everyone who asks you to give the reason for the hope that you have"
+    :Chinese
+    "有人問你們心中盼望的緣由"))
+
+(defn PREPARE1 [subject object & {:keys [target frequency]
+                  :or {target nil frequency nil}}]
+  (case @language
+    :English
+    (make-sentence (vector (sci-eval frequency) "be prepared"
+                           "to" (sci-eval target)))
+    ;; "Always be prepared to give an answer to everyone who asks you to give the reason for the hope that you have."
+
+    :Chinese
+    (make-sentence (vector (sci-eval target) "," "就要" (sci-eval frequency) "作準備"))))
+    ;; "有人問你們心中盼望的緣由，就要常作準備，"
+
+(defn GENTLENESS-AND-RESPECT []
+  (case @language
+    :English
+    "gentleness and respect"
+    :Chinese
+    "溫柔、敬畏的心"))
+
+(defn DO-THIS [subject object & {:keys [attitude]
+                  :or {attitude nil}}]
+  (case @language
+    :English
+    (make-sentence (vector "but do this" "with" (sci-eval attitude)))
+    ;; "But do this with gentleness and respect."
+    :Chinese
+    (make-sentence (vector "以" (sci-eval attitude) "回答各人"))))
+    ;; "以溫柔、敬畏的心回答各人。"
+
 (defn REVERE []
   (case @language
     :English
@@ -214,12 +298,33 @@
     :Chinese
     "以溫柔、敬畏的心回答各人。"))
 
-(defn CON [x y z]
+(defn COME []
+  (case @language
+    :English
+    "and humility comes before honor."
+    :Chinese
+    "尊榮以前，必有謙卑。"))
+
+(defn BE []
+  (case @language
+    :English
+    "Wisdom’s instruction is to fear the Lord,"
+    :Chinese
+    "敬畏耶和華是智慧的訓誨；"))
+
+(defn CON
+  ([x y]
+  (case @language
+    :English
+    (make-phase (map sci-eval [x y]))
+    :Chinese
+    (make-phase (map sci-eval [x y]))))
+  ([x y z]
   (case @language
     :English
     (make-phase (map sci-eval [x y z]))
     :Chinese
-    (make-phase (map sci-eval [x y z]))))
+    (make-phase (map sci-eval [x y z])))))
 
 (def sci-context
   {:namespaces {'user (into {} (map (fn [[k v]] [k @v]) (ns-publics 'hnc-gen.bible)))}})
@@ -230,9 +335,19 @@
                    :audio-en "/audio/en/genesis-1-1.m4a"
                    :audio-cn "/audio/cn/genesis-1-1.m4a"}
                   {:title "1 Peter 3:15"
-                   :verse '(CON '(REVERE) '(PREPARE) '(DO))
+                   ;; :verse '(CON '(REVERE) '(PREPARE) '(DO))
+                   :verse '(CON '(REVERE1 nil '(CHRIST) :target '(LORD) :location '(IN-YOUR-HEART) :connect '(BUT))
+                                '(PREPARE1 nil nil :target '(GIVE-ANSWER) :frequency '(ALWAYS))
+                                '(DO-THIS nil nil :attitude '(GENTLENESS-AND-RESPECT)))
                    :image "/img/1-peter-3-15.jpg"
                    :audio-en "/audio/en/1-peter-3-15.m4a"
-                   :audio-cn "/audio/cn/1-peter-3-15.m4a"}])
+                   :audio-cn "/audio/cn/1-peter-3-15.m4a"}
+                  {:title "Proverbs 15:33"
+                   :verse '(CON '(BE) '(COME))
+                   :image "/img/proverbs-15-33.jpg"
+                   :audio-en "/audio/en/proverbs-15-33.m4a"
+                   :audio-cn "/audio/cn/proverbs-15-33.m4a"}
+                  ]
+  )
 ;; (CREATE '(GOD) '(AND '(HEAVEN {:number "Plural" :spec "Definite"}) '(EARTH)) {:tense "Past" :time '(BEGIN)})
 
