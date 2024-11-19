@@ -325,6 +325,57 @@
     (remove-all-spaces "你 們 務 要 常 存 弟 兄 相 愛 的 心 。 不 可 忘 記 用 愛 心 接 待 客 旅 ； 因 為 曾 有 接 待 客 旅 的 ， 不 知 不 覺 就 接 待 了 天 使 。")
     ))
 
+(defn Corinthians1-15-33 []
+  (case @language
+    :English
+    "Do not be misled: “Bad company corrupts good character.”"
+    :Chinese
+    (remove-all-spaces "你 們 不 要 自 欺 ； 濫 交 是 敗 壞 善 行 。")
+    ))
+
+(defn Psalm-120-2 []
+  (case @language
+    :English
+    "Save me, Lord, from lying lips and from deceitful tongues."
+    :Chinese
+    (remove-all-spaces "耶 和 華 啊 ， 求 你 救 我 脫 離 說 謊 的 嘴 唇 和 詭 詐 的 舌 頭 ！")
+    ))
+
+(defn Deuteronomy-4-39 []
+  (case @language
+    :English
+    "Acknowledge and take to heart this day that the Lord is God in heaven above and on the earth below. There is no other."
+    :Chinese
+    (remove-all-spaces "所 以 ， 今 日 你 要 知 道 ， 也 要 記 在 心 上 ， 天 上 地 下 惟 有 耶 和 華 他 是 神 ， 除 他 以 外 ， 再 無 別 神 。")
+    ))
+
+(defn Luke-9-24 []
+  (case @language
+    :English
+    "For whoever wants to save their life will lose it, but whoever loses their life for me will save it."
+    :Chinese
+    (remove-all-spaces "因 為 ， 凡 要 救 自 己 生 命 的 ， 必 喪 掉 生 命 ； 凡 為 我 喪 掉 生 命 的 ， 必 救 了 生 命 。")
+    ))
+
+(defn Titus-3-5 []
+  (case @language
+    :English
+    "He saved us, not because of righteous things we had done, but because of his mercy. He saved us through the washing of rebirth and renewal by the Holy Spirit."
+    :Chinese
+    (remove-all-spaces "他 便 救 了 我 們 ； 並 不 是 因 我 們 自 己 所 行 的 義 ， 乃 是 照 他 的 憐 憫 ， 藉 著 重 生 的 洗 和 聖 靈 的 更 新 。")
+    ))
+
+(defn Nahum-1-3 []
+  (case @language
+    :English
+    "The Lord is slow to anger but great in power;
+the Lord will not leave the guilty unpunished.
+His way is in the whirlwind and the storm,
+and clouds are the dust of his feet."
+    :Chinese
+    (remove-all-spaces "耶 和 華 不 輕 易 發 怒 ， 大 有 能 力 ， 萬 不 以 有 罪 的 為 無 罪 。 他 乘 旋 風 和 暴 風 而 來 ， 雲 彩 為 他 腳 下 的 塵 土 。")
+    ))
+
 (defn CON
   ([x y]
   (case @language
@@ -355,6 +406,27 @@
                    :audio-en "/audio/en/hebrews-13-1-2-en.m4a"
                    :audio-cn "/audio/cn/hebrews-13-1-2-cn.m4a"}
 
+                  {:date (t/date-time 2024 11 11)
+                   :title "1 Corinthians 15:33"
+                   :verse '(Corinthians1-15-33)
+                   :image "/img/1-corinthians-15-33.jpg"
+                   :audio-en "/audio/en/1-corinthians-15-33-en.m4a"
+                   :audio-cn "/audio/cn/1-corinthians-15-33-cn.m4a"}
+
+                  {:date (t/date-time 2024 11 12)
+                   :title "Psalm 120:2"
+                   :verse '(Psalm-120-2)
+                   :image "/img/psalm-120-2.jpg"
+                   :audio-en "/audio/en/psalm-120-2-en.m4a"
+                   :audio-cn "/audio/cn/psalm-120-2-cn.m4a"}
+
+                  {:date (t/date-time 2024 11 13)
+                   :title "Deuteronomy 4:39"
+                   :verse '(Deuteronomy-4-39)
+                   :image "/img/deuteronomy-4-39.jpg"
+                   :audio-en "/audio/en/deuteronomy-4-39-en.m4a"
+                   :audio-cn "/audio/cn/deuteronomy-4-39-cn.m4a"}
+
                   {:date (t/date-time 2024 11 14)
                    :title "1 Peter 3:15"
                    ;; :verse '(CON '(REVERE) '(PREPARE) '(DO))
@@ -364,11 +436,35 @@
                    :image "/img/1-peter-3-15.jpg"
                    :audio-en "/audio/en/1-peter-3-15.m4a"
                    :audio-cn "/audio/cn/1-peter-3-15.m4a"}
-                  {:title "Proverbs 15:33"
+
+                  {:date (t/date-time 2024 11 15)
+                   :title "Proverbs 15:33"
                    :verse '(CON '(BE) '(COME))
                    :image "/img/proverbs-15-33.jpg"
                    :audio-en "/audio/en/proverbs-15-33.m4a"
                    :audio-cn "/audio/cn/proverbs-15-33.m4a"}
+
+                  {:date (t/date-time 2024 11 16)
+                   :title "Luke 9:24"
+                   :verse '(Luke-9-24)
+                   :image "/img/luke-9-24.jpg"
+                   :audio-en "/audio/en/luke-9-24-en.m4a"
+                   :audio-cn "/audio/cn/luke-9-24-cn.m4a"}
+
+                  {:date (t/date-time 2024 11 17)
+                   :title "Titus 3:5"
+                   :verse '(Titus-3-5)
+                   :image "/img/titus-3-5.jpg"
+                   :audio-en "/audio/en/titus-3-5-en.m4a"
+                   :audio-cn "/audio/cn/titus-3-5-cn.m4a"}
+
+                  {:date (t/date-time 2024 11 18)
+                   :title "Nahum 1:3"
+                   :verse '(Nahum-1-3)
+                   :image "/img/nahum-1-3.jpg"
+                   :audio-en "/audio/en/nahum-1-3-en.m4a"
+                   :audio-cn "/audio/cn/nahum-1-3-cn.m4a"}
+
                   ]
   )
 ;; (CREATE '(GOD) '(AND '(HEAVEN {:number "Plural" :spec "Definite"}) '(EARTH)) {:tense "Past" :time '(BEGIN)})
