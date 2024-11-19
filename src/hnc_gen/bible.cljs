@@ -441,8 +441,8 @@ and clouds are the dust of his feet."
                    :title "Proverbs 15:33"
                    :verse '(CON '(BE) '(COME))
                    :image "/img/proverbs-15-33.jpg"
-                   :audio-en "/audio/en/proverbs-15-33.m4a"
-                   :audio-cn "/audio/cn/proverbs-15-33.m4a"}
+                   :audio-en "/audio/en/proverbs-15-33-en.m4a"
+                   :audio-cn "/audio/cn/proverbs-15-33-cn.m4a"}
 
                   {:date (t/date-time 2024 11 16)
                    :title "Luke 9:24"
