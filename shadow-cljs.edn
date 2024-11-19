@@ -3,7 +3,8 @@
                 [applied-science/js-interop "0.2.7"]
                 [funcool/promesa "6.0.2"]
                 [org.babashka/sci "0.7.39"]
-                [cljs-http "0.1.48"]]
+                [cljs-http "0.1.48"]
+                [com.andrewmcveigh/cljs-time "0.5.2"]]
  :builds {:server {:target :node-script
                    :output-to "devserver.js"
                    :main biblang.server/main!

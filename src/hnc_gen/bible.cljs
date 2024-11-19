@@ -1,6 +1,7 @@
 (ns hnc-gen.bible
   (:require [cljs.js :as cljs]
-            [sci.core :as sci]))
+            [sci.core :as sci]
+            [cljs-time.core :as t]))
 
 (declare sci-context make-phase)
 
@@ -312,6 +313,18 @@
     :Chinese
     "敬畏耶和華是智慧的訓誨；"))
 
+(defn remove-all-spaces
+  [s]
+  (clojure.string/replace s #"\s" ""))
+
+(defn Hebrews-13-1-2 []
+  (case @language
+    :English
+    "Keep on loving one another as brothers and sisters. Do not forget to show hospitality to strangers, for by so doing some people have shown hospitality to angels without knowing it."
+    :Chinese
+    (remove-all-spaces "你 們 務 要 常 存 弟 兄 相 愛 的 心 。 不 可 忘 記 用 愛 心 接 待 客 旅 ； 因 為 曾 有 接 待 客 旅 的 ， 不 知 不 覺 就 接 待 了 天 使 。")
+    ))
+
 (defn CON
   ([x y]
   (case @language
@@ -334,7 +347,16 @@
                    :image "/img/genesis-1-1.jpg"
                    :audio-en "/audio/en/genesis-1-1.m4a"
                    :audio-cn "/audio/cn/genesis-1-1.m4a"}
-                  {:title "1 Peter 3:15"
+
+                  {:date (t/date-time 2024 11 10)
+                   :title "Hebrews 13:1-2"
+                   :verse '(Hebrews-13-1-2)
+                   :image "/img/hebrews-13-1-2.jpg"
+                   :audio-en "/audio/en/hebrews-13-1-2-en.m4a"
+                   :audio-cn "/audio/cn/hebrews-13-1-2-cn.m4a"}
+
+                  {:date (t/date-time 2024 11 14)
+                   :title "1 Peter 3:15"
                    ;; :verse '(CON '(REVERE) '(PREPARE) '(DO))
                    :verse '(CON '(REVERE1 nil '(CHRIST) :target '(LORD) :location '(IN-YOUR-HEART) :connect '(BUT))
                                 '(PREPARE1 nil nil :target '(GIVE-ANSWER) :frequency '(ALWAYS))
