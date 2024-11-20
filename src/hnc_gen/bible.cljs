@@ -376,6 +376,14 @@ and clouds are the dust of his feet."
     (remove-all-spaces "耶 和 華 不 輕 易 發 怒 ， 大 有 能 力 ， 萬 不 以 有 罪 的 為 無 罪 。 他 乘 旋 風 和 暴 風 而 來 ， 雲 彩 為 他 腳 下 的 塵 土 。")
     ))
 
+(defn Matthew-24-14 []
+  (case @language
+    :English
+    "And this gospel of the kingdom will be preached in the whole world as a testimony to all nations, and then the end will come."
+    :Chinese
+    (remove-all-spaces "這 天 國 的 福 音 要 傳 遍 天 下 ， 對 萬 民 作 見 證 ， 然 後 末 期 才 來 到 。")
+    ))
+
 (defn CON
   ([x y]
   (case @language
@@ -464,6 +472,13 @@ and clouds are the dust of his feet."
                    :image "/img/nahum-1-3.jpg"
                    :audio-en "/audio/en/nahum-1-3-en.m4a"
                    :audio-cn "/audio/cn/nahum-1-3-cn.m4a"}
+
+                  {:date (t/date-time 2024 11 19)
+                   :title "Matthew 24:14"
+                   :verse '(Matthew-24-14)
+                   :image "/img/matthew-24-14.jpg"
+                   :audio-en "/audio/en/matthew-24-14-en.m4a"
+                   :audio-cn "/audio/cn/matthew-24-14-cn.m4a"}
 
                   ]
   )
