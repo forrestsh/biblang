@@ -17,7 +17,7 @@
                         :loading false}))
 
 
-(def current-page (r/atom 1))
+(def current-page (r/atom max-page))
 
 ;; Function to fetch item by number
 (defn fetch-item [number]
@@ -143,13 +143,21 @@
    :cursor "pointer"
    :border-radius "5px"})
 
+(defn dec-rot [x]
+  (inc (mod (- x 2) max-page))
+  )
+
+(defn inc-rot [x]
+  (inc (mod x max-page))
+  )
+
 (defn prev-page [current-page]
-  (swap! current-page dec)
+  (swap! current-page dec-rot)
   ;; (fetch-item @current-page)
   )
 
 (defn next-page [current-page]
-  (swap! current-page inc)
+  (swap! current-page inc-rot)
   ;; (fetch-item @current-page)
   )
 
@@ -164,7 +172,8 @@
        [:button {:style (button-style "left")
                  ;; :on-click #(swap! current-page dec)
                  :on-click #(prev-page current-page)
-                 :disabled (= @current-page 1)}
+                 ;; :disabled (= @current-page 1)
+                 }
         "Previous"]
        [:h2 (title @current-page)]
        ;; [:img {:src (str "https://via.placeholder.com/400x200?text=Page+" @current-page)
@@ -177,7 +186,8 @@
        [:button {:style (button-style "right")
                  ;; :on-click #(swap! current-page inc)
                  :on-click #(next-page current-page)
-                 :disabled (= @current-page max-page)}
+                 ;; :disabled (= @current-page max-page)
+                 }
         "Next"]]))
 
 (defn top-division1 []
