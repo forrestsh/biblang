@@ -384,6 +384,40 @@ and clouds are the dust of his feet."
     (remove-all-spaces "這 天 國 的 福 音 要 傳 遍 天 下 ， 對 萬 民 作 見 證 ， 然 後 末 期 才 來 到 。")
     ))
 
+(defn John-3-3 []
+  (case @language
+    :English
+    "Jesus replied, “Very truly I tell you, no one can see the kingdom of God unless they are born again.”"
+    :Chinese
+    (remove-all-spaces "耶 穌 回 答 說 ： 「 我 實 實 在 在 地 告 訴 你 ， 人 若 不 重 生 ， 就 不 能 見 神 的 國 。 」")
+    ))
+
+(defn Psalm-24-10 []
+  (case @language
+    :English
+    "Who is he, this King of glory?
+The Lord Almighty—
+he is the King of glory."
+    :Chinese
+    (remove-all-spaces "榮 耀 的 王 是 誰 呢 ？ 萬 軍 之 耶 和 華 ， 他 是 榮 耀 的 王 ！ （ 細 拉 ）")
+    ))
+
+(defn Ephesians-4-2 []
+  (case @language
+    :English
+    "Be completely humble and gentle; be patient, bearing with one another in love."
+    :Chinese
+    (remove-all-spaces "凡 事 謙 虛 、 溫 柔 、 忍 耐 ， 用 愛 心 互 相 寬 容 。")
+    ))
+
+(defn Galatians-6-2 []
+  (case @language
+    :English
+    "Carry each other’s burdens, and in this way you will fulfill the law of Christ."
+    :Chinese
+    (remove-all-spaces "你 們 各 人 的 重 擔 要 互 相 擔 當 ， 如 此 ， 就 完 全 了 基 督 的 律 法 。")
+    ))
+
 (defn CON
   ([x y]
   (case @language
@@ -480,6 +514,33 @@ and clouds are the dust of his feet."
                    :audio-en "/audio/en/matthew-24-14-en.m4a"
                    :audio-cn "/audio/cn/matthew-24-14-cn.m4a"}
 
+                  {:date (t/date-time 2024 11 20)
+                   :title "John 3:3"
+                   :verse '(John-3-3)
+                   :image "/img/john-3-3.jpg"
+                   :audio-en "/audio/en/john-3-3-en.m4a"
+                   :audio-cn "/audio/cn/john-3-3-cn.m4a"}
+
+                  {:date (t/date-time 2024 11 21)
+                   :title "Psalm 24:10"
+                   :verse '(Psalm-24-10)
+                   :image "/img/psalm-24-10.jpg"
+                   :audio-en "/audio/en/psalm-24-10-en.m4a"
+                   :audio-cn "/audio/cn/psalm-24-10-cn.m4a"}
+
+                  {:date (t/date-time 2024 11 22)
+                   :title "Ephesians 4:2"
+                   :verse '(Ephesians-4-2)
+                   :image "/img/ephesians-4-2.jpg"
+                   :audio-en "/audio/en/ephesians-4-2-en.m4a"
+                   :audio-cn "/audio/cn/ephesians-4-2-cn.m4a"}
+
+                  {:date (t/date-time 2024 11 23)
+                   :title "Galatians 6:2"
+                   :verse '(Galatians-6-2)
+                   :image "/img/galatians-6-2.jpg"
+                   :audio-en "/audio/en/galatians-6-2-en.m4a"
+                   :audio-cn "/audio/cn/galatians-6-2-cn.m4a"}
                   ]
   )
 ;; (CREATE '(GOD) '(AND '(HEAVEN {:number "Plural" :spec "Definite"}) '(EARTH)) {:tense "Past" :time '(BEGIN)})
